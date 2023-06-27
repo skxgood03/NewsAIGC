@@ -37,7 +37,7 @@ Get a newsletter summarized by GPT from multiple RSS sources.
 ## INTERNAL_ONLY & CONFIDENTIAL
 
 ```shell
- python main.py --db-user "root" --db-password "gempoll" --db-host "10.7.100.245" --db "ai_data_center" --api-base "https://openai-test-gempoll.openai.azure.com/" --api-version "2022-12-01" --endpoint "https://openai-test-gempoll.openai.azure.com/openai/deployments/gempoll-test-1/completions?api-version=2022-12-01" --api-key "c901f12112ed4ee1af39c9b9e9c96ef2"
+ python main.py --db-user "root" --db-password "gempoll" --db-host "10.7.100.245" --db "ai_data_center" --api-base "https://openai-test-gempoll.openai.azure.com/" --api-version "2022-12-01" --endpoint "https://openai-test-gempoll.openai.azure.com/openai/deployments/gempoll-test-1/completions?api-version=2022-12-01" --api-key "c901f12112ed4ee1af39c9b9e9c96ef2" --access_key_id "bo71Pp26DgpIT9vW" --access_key_secret "r2FaziaNDqBgv4kDQIjgAbcTazv0kB" --bucket_name "gempoll-ai"  --endpoint "oss-cn-shanghai.aliyuncs.com"
 ```
 
 ## Useful Source

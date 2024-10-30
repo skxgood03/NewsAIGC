@@ -6,3 +6,4 @@ mysql-connector-python
 requests_html
 apscheduler
 func-timeout
+lxml_html_clean

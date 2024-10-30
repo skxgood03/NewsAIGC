@@ -99,60 +99,16 @@ consumer_electronics: 消费电子，智能手机，智能手表等内容
             }
         }
     ]
-    functions = [{
-        "name": function_name,
-        "description": "记录文章的总结和标签",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "summary": {
-                    "type": "string",
-                    "description": "中文的简短的不超过300字的文章总结"
-                },
-                "aigc": {
-                    "type": "boolean",
-                    "description": "文章是否含有生成式AI，大语言模型，文生图模型等的相关内容"
-                },
-                "digital_human": {
-                    "type": "boolean",
-                    "description": "文章是否含有数字人，动作捕捉，面部捕捉，数字人形艺术等的相关内容"
-                },
-                "neural_rendering": {
-                    "type": "boolean",
-                    "description": "文章是否含有神经渲染器，NeRF，可微分渲染等的相关内容"
-                },
-                "computer_graphics": {
-                    "type": "boolean",
-                    "description": "文章是否含有图形学，渲染器，渲染，几何处理，图像处理等的相关内容"
-                },
-                "computer_vision": {
-                    "type": "boolean",
-                    "description": "文章是否含有计算机视觉，图像分类，目标检测，图像分割，语义分割，深度估计等的相关内容。注意: 脑机接口相关内容不属于计算机视觉的范畴"
-                },
-                "robotics": {
-                    "type": "boolean",
-                    "description": "文章是否含有机器人，机器狗，机械，类人机器等的相关内容"
-                },
-                "consumer_electronics": {
-                    "type": "boolean",
-                    "description": "文章是否含有消费电子，智能手机，智能手表等内容"
-                },
-            },
-            "required": ["summary",
-                         "aigc", "digital_human", "neural_rendering", "computer_graphics", "computer_vision",
-                         "robotics", "consumer_electronics"],
-        },
-    }]
+
     response = client.chat.completions.create(
         model=chatgpt_deployment_name,
         messages=messages,
         tools=tools,
         tool_choice={"type": "function", "function": {"name": function_name}}
     )
-
-    function_call_info = response['choices'][0]['message']["tool_calls"][0]["function"]
-    assert function_call_info["name"] == function_name
-    function_args = json.loads(function_call_info["arguments"])
+    function_call_info = response.choices[0].message.tool_calls[0].function
+    assert function_call_info.name == function_name
+    function_args = json.loads(function_call_info.arguments)
     feed_item.summary = function_args["summary"]
     feed_item.tags = Tags(function_args["aigc"],
                           function_args["digital_human"],

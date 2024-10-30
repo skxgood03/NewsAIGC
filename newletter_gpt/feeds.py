@@ -7,8 +7,6 @@ from bs4 import BeautifulSoup
 from dateutil.parser import parse as parse_datetime_from_string
 import re
 import json
-import easyocr
-import oss2
 import os
 from requests_html import HTMLSession
 import argparse
@@ -148,8 +146,6 @@ def get_img_url(item, args):
         img_url = liangZiWei(item.link)
     elif item.source == "机器之心":
         img_url = jiQi(item.link)
-    elif item.source == "新智元":
-        img_url = xinZhiYuan(item.link, args)
     else:
         img_url = 'None'
     return img_url
@@ -192,48 +188,4 @@ def jiQi(web_url):
         url = "None "
     else:
         url = urls[0]
-    return url
-
-
-#get the image url of the article from xinZhiYuan
-def xinZhiYuan(web_url, args):
-    session = HTMLSession()
-    r = session.get(web_url)
-    r.html.render()
-    s_imgs = r.html.find('img')
-
-    urls = []
-    for s_img in s_imgs:
-        if 'data-src' in s_img.attrs:
-            img_url = s_img.attrs['data-src']
-            urls.append(img_url)
-    if len(urls) < 1:
-        url = "None"
-        return url
-
-    url = urls[0]
-    html = requests.get(url)
-
-    #create a temporary file
-    name = web_url[27:] + '.jpg'
-    with open(name, 'wb') as file:
-        file.write(html.content)
-
-    reader = easyocr.Reader(['ch_sim', 'en'])
-    result = reader.readtext(name)
-    if len(result) > 1:
-        if len(result[1]) > 1:
-            if result[0][1] == '此图片来自微信公众平台':
-                url = "None"
-                return url
-
-    # upload and delete the temporary file
-    auth = oss2.Auth(args.access_key_id, args.access_key_secret)
-    bucket = oss2.Bucket(auth, args.endpoint, args.bucket_name)
-    object_key = name
-    local_file = name
-    bucket.put_object_from_file(object_key, local_file)
-    url = f"https://{args.bucket_name}.{args.endpoint}/{name}"
-    os.remove(name)
-
     return url

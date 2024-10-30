@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("NewsletterGPT")
 logger.setLevel("INFO")
 
-CHATGPT_DEPLOYMENT_NAME = "gpt-long"
+CHATGPT_DEPLOYMENT_NAME = "gpt-4o-mini"
 SLEEP_HOURS = 12
 
 

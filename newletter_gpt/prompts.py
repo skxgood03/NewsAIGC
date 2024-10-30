@@ -16,7 +16,7 @@ def gen_summary_and_tags_via_llm(feed_item: FeedItem,
                                  chatgpt_deployment_name: str):
     # set up openai
     openai.api_key = api_key
-    openai.api_version = "2023-07-01-preview"
+    openai.api_version = "2024-09-01-preview"
     openai.api_type = "azure"
     openai.api_base = api_base
     # truncate content, max ~5000 Chinese and English character

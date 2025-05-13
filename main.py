@@ -10,7 +10,7 @@ logger = logging.getLogger("NewsletterGPT")
 logger.setLevel("INFO")
 
 CHATGPT_DEPLOYMENT_NAME = "gpt-4o-mini"
-SLEEP_HOURS = 12
+SLEEP_HOURS = 1
 
 
 def get_updates(configs, feed_sources):

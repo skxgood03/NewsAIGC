@@ -120,7 +120,7 @@ def parse_rss(url: str, source: str) -> List[FeedItem]:
             namespaces={"content": "http://purl.org/rss/1.0/modules/content/"})
         if content is None:
             # if there is no content tag, then we need to parse the html content
-            html_content = requests.get(link).text
+            html_content = requests.get(link, headers=headers).text
             soup = BeautifulSoup(html_content, "html.parser")
             content = soup.get_text()
             with_html_noise = True
